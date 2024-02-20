@@ -1,0 +1,37 @@
+{
+    "name": "kejedi/lucid",
+    "description": "Declare database schemas inside Laravel models.",
+    "keywords": [
+        "lucid",
+        "database",
+        "schemas",
+        "laravel",
+        "models"
+    ],
+    "license": "MIT",
+    "support": {
+        "source": "https://github.com/kejedi/lucid"
+    },
+    "authors": [
+        {
+            "name": "Kevin Dion",
+            "email": "kejedi@icloud.com"
+        }
+    ],
+    "require": {
+        "barryvdh/laravel-ide-helper": "^2.15",
+        "doctrine/dbal": "^3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kejedi\\Lucid\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kejedi\\Lucid\\LucidServiceProvider"
+            ]
+        }
+    }
+}
