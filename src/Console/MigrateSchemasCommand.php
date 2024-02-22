@@ -65,7 +65,10 @@ class MigrateSchemasCommand extends Command
                 Str::after($file->getRealPath(), realpath(app_path()) . DIRECTORY_SEPARATOR)
             );
 
-            if (method_exists($model, 'schema')) {
+            if (
+                method_exists($model, 'schema') ||
+                method_exists($model, 'extraSchema')
+            ) {
                 $this->syncSchema(app($model));
             }
         }
@@ -93,7 +96,15 @@ class MigrateSchemasCommand extends Command
         $builder->dropIfExists($temporaryTable);
 
         $builder->create($temporaryTable, function (Blueprint $table) use ($model) {
-            $model->schema(new Table($table));
+            $lucidTable = new Table($table);
+
+            if (method_exists($model, 'schema')) {
+                $model->schema($lucidTable);
+            }
+
+            if (method_exists($model, 'extraSchema')) {
+                $model->extraSchema($lucidTable);
+            }
         });
 
         return $temporaryTable;

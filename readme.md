@@ -18,7 +18,7 @@ Create a new model class with a schema method:
 php artisan make:schema Post
 ```
 
-Or, add a schema method to an existing model:
+Or, add a `schema` / `extraSchema` method to an existing model:
 
 ```php
 namespace App\Models;
@@ -31,7 +31,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    public function schema(Table $table)
+    public function schema(Table $table) // and / or extraSchema
     {
         $table->id();
         $table->string('title')->index();
