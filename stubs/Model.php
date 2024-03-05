@@ -10,7 +10,7 @@ class DummyClass extends Model
 {
     use HasFactory;
 
-    public function schema(Table $table)
+    public function schema(Table $table): void
     {
         $table->id();
         $table->string('name');

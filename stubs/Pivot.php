@@ -7,7 +7,7 @@ use Kejedi\Lucid\Table;
 
 class DummyClass extends Pivot
 {
-    public function schema(Table $table)
+    public function schema(Table $table): void
     {
         $table->id();
         $table->integer('first_id')->index();

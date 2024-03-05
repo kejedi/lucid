@@ -9,7 +9,7 @@ use Kejedi\Lucid\Console\MigrateSchemasCommand;
 
 class LucidServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->commands([

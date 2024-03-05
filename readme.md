@@ -12,7 +12,7 @@ composer require kejedi/lucid
 
 ## Usage
 
-Create a new model class with a schema method:
+Create a new model class with a `schema` method:
 
 ```console
 php artisan make:schema Post
@@ -42,7 +42,7 @@ class Post extends Model
 }
 ```
 
-Migrate & sync model schema methods with the database:
+Migrate & sync model `schema` / `extraSchema` methods with the database:
 
 ```console
 php artisan migrate:schemas
@@ -50,13 +50,13 @@ php artisan migrate:schemas
 
 ## Commands
 
-Create a new model class with a schema method:
+Create a new model class with a `schema` method:
 
 ```console
 php artisan make:schema {name} {--p|pivot} {--force}
 ```
 
-Migrate & sync model schema methods with the database:
+Migrate & sync model `schema` / `extraSchema` methods with the database:
 
 ```console
 migrate:schemas {--f|fresh} {--s|seed} {--force}

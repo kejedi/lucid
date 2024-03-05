@@ -22,7 +22,7 @@ class DummyClass extends Authenticatable
         'remember_token',
     ];
 
-    public function schema(Table $table)
+    public function schema(Table $table): void
     {
         $table->id();
         $table->string('name');

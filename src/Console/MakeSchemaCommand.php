@@ -13,7 +13,7 @@ class MakeSchemaCommand extends GeneratorCommand
 
     protected $type = 'Model';
 
-    public function handle()
+    public function handle(): bool|int
     {
         if (parent::handle() === false && !$this->option('force')) {
             return false;
@@ -26,9 +26,11 @@ class MakeSchemaCommand extends GeneratorCommand
         if (!$this->option('pivot')) {
             $this->createFactory();
         }
+
+        return 0;
     }
 
-    protected function backupUserMigration()
+    protected function backupUserMigration(): void
     {
         $file = database_path('migrations/2014_10_12_000000_create_users_table.php');
 
@@ -37,14 +39,14 @@ class MakeSchemaCommand extends GeneratorCommand
         }
     }
 
-    protected function createFactory()
+    protected function createFactory(): void
     {
         $this->call('make:factory', [
             'name' => "{$this->argument('name')}Factory",
         ]);
     }
 
-    protected function getStub()
+    protected function getStub(): string
     {
         if ($this->argument('name') == 'User') {
             return __DIR__ . '/../../stubs/User.php';
@@ -57,12 +59,12 @@ class MakeSchemaCommand extends GeneratorCommand
         return __DIR__ . '/../../stubs/Model.php';
     }
 
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace . '\\Models';
     }
 
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['pivot', 'p', InputOption::VALUE_NONE, 'Indicates if the generated model should be a pivot'],

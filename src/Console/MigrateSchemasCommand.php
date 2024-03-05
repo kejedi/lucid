@@ -2,6 +2,7 @@
 
 namespace Kejedi\Lucid\Console;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +21,7 @@ class MigrateSchemasCommand extends Command
 
     protected $description = 'Migrate & sync model schema methods with the database';
 
-    public function handle()
+    public function handle(): int
     {
         if (!$this->confirmToProceed()) {
             return 1;
@@ -41,7 +42,7 @@ class MigrateSchemasCommand extends Command
         return 0;
     }
 
-    protected function migrate()
+    protected function migrate(): void
     {
         $command = $this->option('fresh')
             ? 'migrate:fresh'
@@ -52,7 +53,7 @@ class MigrateSchemasCommand extends Command
         ]);
     }
 
-    protected function syncSchemas()
+    protected function syncSchemas(): void
     {
         $this->components->info('Syncing schemas.');
 
@@ -76,7 +77,7 @@ class MigrateSchemasCommand extends Command
         }
     }
 
-    protected function syncSchema(Model|Pivot $model)
+    protected function syncSchema(Model|Pivot $model): void
     {
         $builder = $model->getConnection()->getSchemaBuilder();
 
@@ -89,7 +90,7 @@ class MigrateSchemasCommand extends Command
         }
     }
 
-    protected function createTemporaryTable(Model|Pivot $model, Builder $builder)
+    protected function createTemporaryTable(Model|Pivot $model, Builder $builder): string
     {
         $temporaryTable = "{$model->getTable()}_table";
 
@@ -110,7 +111,7 @@ class MigrateSchemasCommand extends Command
         return $temporaryTable;
     }
 
-    protected function createTable(Model|Pivot $model, Builder $builder, $temporaryTable)
+    protected function createTable(Model|Pivot $model, Builder $builder, $temporaryTable): void
     {
         $this->components->task(
             "Creating {$model->getTable()} table",
@@ -120,28 +121,32 @@ class MigrateSchemasCommand extends Command
         );
     }
 
-    protected function updateTable(Model|Pivot $model, Builder $builder, $temporaryTable)
+    protected function updateTable(Model|Pivot $model, Builder $builder, $temporaryTable): void
     {
-        $manager = $model->getConnection()->getDoctrineSchemaManager();
+        try {
+            $manager = $model->getConnection()->getDoctrineSchemaManager();
 
-        $tableDifference = $manager->createComparator()->compareTables(
-            $manager->introspectTable($model->getTable()),
-            $manager->introspectTable($temporaryTable),
-        );
-
-        if (!$tableDifference->isEmpty()) {
-            $this->components->task(
-                "Updating {$model->getTable()} table",
-                function () use ($manager, $tableDifference) {
-                    $manager->alterTable($tableDifference);
-                }
+            $tableDifference = $manager->createComparator()->compareTables(
+                $manager->introspectTable($model->getTable()),
+                $manager->introspectTable($temporaryTable),
             );
+
+            if (!$tableDifference->isEmpty()) {
+                $this->components->task(
+                    "Updating {$model->getTable()} table",
+                    function () use ($manager, $tableDifference) {
+                        $manager->alterTable($tableDifference);
+                    }
+                );
+            }
+        } catch (Exception $exception) {
+            $this->components->error($exception->getMessage());
         }
 
         $builder->drop($temporaryTable);
     }
 
-    protected function generateIdeHelper()
+    protected function generateIdeHelper(): void
     {
         $this->components->task("Generating IDE helper files", function () {
             $this->callSilently('ide-helper:generate');
@@ -152,7 +157,7 @@ class MigrateSchemasCommand extends Command
         });
     }
 
-    protected function seed()
+    protected function seed(): void
     {
         $this->call('db:seed', [
             '--force' => true,
