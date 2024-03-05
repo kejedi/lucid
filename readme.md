@@ -31,7 +31,8 @@ class Post extends Model
 {
     use HasFactory;
 
-    public function schema(Table $table) // and / or extraSchema
+    // and / or extraSchema
+    public function schema(Table $table): void 
     {
         $table->id();
         $table->string('title')->index();
