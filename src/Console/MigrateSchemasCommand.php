@@ -36,6 +36,8 @@ class MigrateSchemasCommand extends Command
             $this->seed();
         }
 
+        $this->newLine();
+
         return 0;
     }
 
@@ -60,10 +62,10 @@ class MigrateSchemasCommand extends Command
 
         foreach ((new Finder)->in($path)->files() as $file) {
             $model = $namespace . str_replace(
-                ['/', '.php'],
-                ['\\', ''],
-                Str::after($file->getRealPath(), realpath(app_path()) . DIRECTORY_SEPARATOR)
-            );
+                    ['/', '.php'],
+                    ['\\', ''],
+                    Str::after($file->getRealPath(), realpath(app_path()) . DIRECTORY_SEPARATOR)
+                );
 
             if (
                 method_exists($model, 'schema') ||
@@ -72,8 +74,6 @@ class MigrateSchemasCommand extends Command
                 $this->syncSchema(app($model));
             }
         }
-
-        $this->newLine();
     }
 
     protected function syncSchema(Model|Pivot $model)
@@ -143,11 +143,13 @@ class MigrateSchemasCommand extends Command
 
     protected function generateIdeHelper()
     {
-        $this->call('ide-helper:generate');
+        $this->components->task("Generating IDE helper files", function () {
+            $this->callSilently('ide-helper:generate');
 
-        $this->call('ide-helper:model', [
-            '--nowrite' => true,
-        ]);
+            $this->callSilently('ide-helper:model', [
+                '--nowrite' => true,
+            ]);
+        });
     }
 
     protected function seed()
