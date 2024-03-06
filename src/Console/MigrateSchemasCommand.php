@@ -31,7 +31,9 @@ class MigrateSchemasCommand extends Command
 
         $this->syncSchemas();
 
-        $this->generateIdeHelper();
+        if (!app()->isProduction()) {
+            $this->generateIdeHelpers();
+        }
 
         if ($this->option('seed')) {
             $this->seed();
@@ -146,7 +148,7 @@ class MigrateSchemasCommand extends Command
         $builder->drop($temporaryTable);
     }
 
-    protected function generateIdeHelper(): void
+    protected function generateIdeHelpers(): void
     {
         $this->components->task("Generating IDE helper files", function () {
             $this->callSilently('ide-helper:generate');
