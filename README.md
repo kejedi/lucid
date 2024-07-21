@@ -119,7 +119,7 @@ php artisan lucid:factory {name} {--force}
 ```
 
 - `name`: the model name for the factory
-- `--force`: Create the class even if the model already exists
+- `--force`: Create the class even if the factory already exists
 
 ### `lucid:migrate`
 
