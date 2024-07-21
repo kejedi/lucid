@@ -1,0 +1,39 @@
+{
+    "name": "kejedi/lucid",
+    "description": "Declare database schemas and factory definitions inside Laravel models.",
+    "keywords": [
+        "lucid",
+        "database",
+        "schemas",
+        "factory",
+        "definitions",
+        "laravel",
+        "models"
+    ],
+    "license": "MIT",
+    "support": {
+        "source": "https://github.com/kejedi/lucid"
+    },
+    "authors": [
+        {
+            "name": "Kevin Dion",
+            "email": "kejedi@icloud.com"
+        }
+    ],
+    "require": {
+        "barryvdh/laravel-ide-helper": "^3.1",
+        "doctrine/dbal": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kejedi\\Lucid\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kejedi\\Lucid\\LucidServiceProvider"
+            ]
+        }
+    }
+}
