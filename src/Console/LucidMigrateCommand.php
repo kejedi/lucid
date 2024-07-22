@@ -103,7 +103,7 @@ class LucidMigrateCommand extends Command
                 ->filter(function ($method) {
                     return Str::containsAll($method, ['lucid', 'schema'], true);
                 })
-                ->map(function ($method) use ($model, $table) {
+                ->each(function ($method) use ($model, $table) {
                     $model->$method($table);
                 });
         });
