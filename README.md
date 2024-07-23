@@ -101,7 +101,7 @@ This will migrate traditional Laravel database files, then sync model schema met
 
 ### `lucid:model`
 
-Create a new Eloquent model class with Lucid schema & definition methods
+Create a new Eloquent model class with Lucid schema & definition methods.
 
 ```console
 php artisan lucid:model {name} {--force} {--p|pivot} {--r|resource}
@@ -114,6 +114,8 @@ php artisan lucid:model {name} {--force} {--p|pivot} {--r|resource}
 
 ### `lucid:factory`
 
+Create a new model factory for Lucid definition methods.
+
 ```console
 php artisan lucid:factory {name} {--force}
 ```
@@ -122,6 +124,8 @@ php artisan lucid:factory {name} {--force}
 - `--force`: Create the class even if the factory already exists
 
 ### `lucid:migrate`
+
+Migrate & sync Lucid model schemas with the database.
 
 ```console
 php artisan lucid:migrate {--force} {--f|fresh} {--s|seed}
