@@ -10,7 +10,7 @@ class LucidBlueprint extends Blueprint
     {
         $columnDefinition = parent::addColumn($type, $name, $parameters);
 
-        if (!in_array('autoIncrement', $parameters)) {
+        if ($name != 'id') {
             $columnDefinition->nullable();
         }
 
