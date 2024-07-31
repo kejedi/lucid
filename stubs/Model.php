@@ -13,7 +13,7 @@ class DummyClass extends Model
 
     public function lucidSchema(LucidBlueprint $table): void
     {
-        $table->uuid('id');
+        $table->uuid('id')->primary();
         $table->timestamps();
     }
 

@@ -38,7 +38,7 @@ class Post extends Model
 
     public function lucidSchema(LucidBlueprint $table): void
     {
-        $table->uuid('id');
+        $table->uuid('id')->primary();
         $table->string('title');
         $table->text('body');
         $table->timestamps();

@@ -28,7 +28,7 @@ class User extends Authenticatable
 
     public function lucidSchema(LucidBlueprint $table): void
     {
-        $table->uuid('id');
+        $table->uuid('id')->primary();
         $table->string('name');
         $table->string('email')->unique();
         $table->timestamp('email_verified_at');

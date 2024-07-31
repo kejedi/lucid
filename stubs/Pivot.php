@@ -12,7 +12,7 @@ class DummyClass extends Pivot
 
     public function lucidSchema(LucidBlueprint $table): void
     {
-        $table->uuid('id');
+        $table->uuid('id')->primary();
         $table->timestamps();
     }
 }
