@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +11,7 @@ use Kejedi\Lucid\Database\LucidBlueprint;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, HasUuids, Notifiable;
 
     protected $hidden = [
         'password',
@@ -27,7 +28,7 @@ class User extends Authenticatable
 
     public function lucidSchema(LucidBlueprint $table): void
     {
-        $table->id();
+        $table->uuid('id');
         $table->string('name');
         $table->string('email')->unique();
         $table->timestamp('email_verified_at');

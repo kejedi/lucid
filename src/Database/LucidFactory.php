@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class LucidFactory extends Factory
 {
-    public function definition()
+    public function definition(): array
     {
         $model = $this->newModel();
 

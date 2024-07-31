@@ -14,7 +14,7 @@ class LucidFactoryCommand extends GeneratorCommand
 
     protected $type = 'Factory';
 
-    protected function getStub()
+    protected function getStub(): string
     {
         if ($this->argument('name') == 'User') {
             return __DIR__ . '/../../stubs/UserFactory.php';
@@ -23,14 +23,14 @@ class LucidFactoryCommand extends GeneratorCommand
         return __DIR__ . '/../../stubs/Factory.php';
     }
 
-    protected function getPath($name)
+    protected function getPath($name): string
     {
-        $name = (string) Str::of($name)->replaceFirst($this->rootNamespace(), '')->finish('Factory');
+        $name = (string)Str::of($name)->replaceFirst($this->rootNamespace(), '')->finish('Factory');
 
         return $this->laravel->databasePath() . '/factories/' . str_replace('\\', '/', $name) . '.php';
     }
 
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the factory already exists'],

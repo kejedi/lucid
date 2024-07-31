@@ -27,17 +27,18 @@ You can also add `lucidSchema` and `lucidDefinition` methods to an existing mode
 ```php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Kejedi\Lucid\Database\LucidBlueprint;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     public function lucidSchema(LucidBlueprint $table): void
     {
-        $table->id();
+        $table->uuid('id');
         $table->string('title');
         $table->text('body');
         $table->timestamps();
@@ -73,7 +74,7 @@ trait HasTenant
 {
     public function lucidTenantSchema(LucidBlueprint $table): void
     {
-        $table->integer('tenant_id')->index();
+        $table->uuid('tenant_id')->index();
     }
 
     public function lucidTenantDefinition(): array
@@ -109,8 +110,8 @@ php artisan lucid:model {name} {--force} {--p|pivot} {--r|resource}
 
 - `name`: the model name
 - `--force`: Create the class even if the model already exists
-- `--pivot` or `-p`: Indicates if the generated model should be a custom intermediate table model
-- `--resource` or `-r`: Create a new Filament resource for the model (Filament must be installed first)
+- `--pivot` or `-p`: Indicates if the generated model should be a pivot
+- `--resource` or `-r`: Create a new Filament resource for the model
 
 ### `lucid:factory`
 
@@ -138,9 +139,8 @@ php artisan lucid:migrate {--force} {--f|fresh} {--s|seed}
 ## Notes
 
 - Lucid definition methods only work with a `LucidFactory`
-- IDE helper files are automatically created after migrating in non-production
 - Renaming columns will result in data loss unless they are renamed before running `lucid:migrate`
-- This package only works with sqlite, mysql, & pgsql PDO drivers
+- This package only works with `sqlite`, `mysql`, & `pgsql` PDO drivers
 - Use the `--force` to create a Lucid `User` model in new Laravel apps
-- All columns are nullable by default
-- All models are unguarded by default
+- All columns (except `id`) are nullable by default
+- All models are unguarded by default via the `Model::unguard()` method
