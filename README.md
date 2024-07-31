@@ -139,6 +139,7 @@ php artisan lucid:migrate {--force} {--f|fresh} {--s|seed}
 ## Notes
 
 - Lucid definition methods only work with a `LucidFactory`
+- IDE helper files are automatically created after migrating in non-production
 - Renaming columns will result in data loss unless they are renamed before running `lucid:migrate`
 - This package only works with `sqlite`, `mysql`, & `pgsql` PDO drivers
 - Use the `--force` to create a Lucid `User` model in new Laravel apps

@@ -25,7 +25,7 @@ class LucidFactoryCommand extends GeneratorCommand
 
     protected function getPath($name): string
     {
-        $name = (string)Str::of($name)->replaceFirst($this->rootNamespace(), '')->finish('Factory');
+        $name = (string) Str::of($name)->replaceFirst($this->rootNamespace(), '')->finish('Factory');
 
         return $this->laravel->databasePath() . '/factories/' . str_replace('\\', '/', $name) . '.php';
     }

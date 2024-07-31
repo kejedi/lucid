@@ -21,6 +21,7 @@
         }
     ],
     "require": {
+        "barryvdh/laravel-ide-helper": "^3.1",
         "doctrine/dbal": "^4.0"
     },
     "autoload": {
